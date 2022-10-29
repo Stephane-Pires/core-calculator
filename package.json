@@ -1,0 +1,29 @@
+{
+    "name": "core-calculator",
+    "version": "1.0.0",
+    "description": "Encapsulated the core domain of the calculator",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install",
+        "type-check": "tsc --project tsconfig.json --pretty --noEmit"
+    },
+    "author": "Stéphane Pires",
+    "license": "ISC",
+    "devDependencies": {
+        "@commitlint/cli": "^17.1.2",
+        "@commitlint/config-conventional": "^17.1.0",
+        "@trivago/prettier-plugin-sort-imports": "^3.4.0",
+        "@typescript-eslint/eslint-plugin": "^5.41.0",
+        "@typescript-eslint/parser": "^5.41.0",
+        "eslint": "^8.26.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.26.0",
+        "husky": "^8.0.1",
+        "lint-staged": "^13.0.3",
+        "prettier": "^2.7.1",
+        "typescript": "^4.8.4"
+    }
+}
