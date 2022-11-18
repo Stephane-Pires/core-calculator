@@ -1,6 +1,13 @@
 import { describe, expect, test } from 'vitest'
 
-import { divide, multiply, substraction, sum } from './operator'
+import {
+    divide,
+    findOperator,
+    multiply,
+    OPERATOR,
+    substraction,
+    sum,
+} from './operator'
 
 describe('Calculator is able to make operations', () => {
     test('Should addition two number', () => {
@@ -25,7 +32,7 @@ describe('Calculator is able to make operations', () => {
 })
 
 describe('Calculator should be able to return the correct operation function', () => {
-    test.todo(
-        'to implement later, "find a way to confirm that the function return is the function expected "sum === sum"'
-    )
+    test('Should return a valid operation function', () => {
+        expect(findOperator(OPERATOR.PLUS)).toEqual(sum)
+    })
 })

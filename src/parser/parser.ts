@@ -1,4 +1,4 @@
-import { OPERATOR_SYMBOL } from '../domain/operator'
+import { Operator, OPERATOR_SYMBOL } from '../domain/operator'
 
 const templateNumber = `(\\d+[.|,]?)?\\d+`
 const templateOperator = `\\s*[${OPERATOR_SYMBOL.join('')}]\\s*`
@@ -21,8 +21,7 @@ export function isNumber(str: string) {
     return regexNumber.test(str)
 }
 
-// TODO str :  string pourrait être operator "+" | "-" | "*" | "/"
-export function isOperator(str: string) {
+export function isOperator(str: string): str is Operator {
     const template = `^${templateOperator}$`
     const regexOperator = new RegExp(template, 'g')
 

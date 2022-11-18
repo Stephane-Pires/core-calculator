@@ -23,3 +23,9 @@ describe('Compute operation correctly', () => {
         expect(compute('10  + 2   - 1 *   3 /       3')).toBe(11)
     })
 })
+
+describe('Throw an error if input is incorrect', () => {
+    test('Should throw', () => {
+        expect(() => compute('lkdjvdlfjslkj')).toThrowError(/not valid/)
+    })
+})

@@ -5,7 +5,7 @@ export const OPERATOR = {
     MULTIPLY: '*',
 } as const
 
-// generate type keyof type of OPERATOR
+export type Operator = typeof OPERATOR[keyof typeof OPERATOR]
 
 export const OPERATOR_SYMBOL = Object.values(OPERATOR)
 
@@ -25,7 +25,7 @@ export function divide(numerator: number, denominator: number) {
     return Math.round(numerator / denominator)
 }
 
-export function findOperator(operator: string) {
+export function findOperator(operator: Operator) {
     switch (operator) {
         case OPERATOR.PLUS:
             return sum

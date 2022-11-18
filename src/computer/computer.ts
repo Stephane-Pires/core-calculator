@@ -1,7 +1,9 @@
 import { findOperator } from '../domain/operator'
-import { isOperator, splitString } from '../parser/parser'
+import { isOperator, isValid, splitString } from '../parser/parser'
 
 function compute(str: string) {
+    if (!isValid(str)) throw new Error('This string is not valid')
+
     const operations = splitString(str)
 
     const result = operations.reduce((acc, elem, index, array) => {
