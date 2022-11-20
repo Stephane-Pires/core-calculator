@@ -4,7 +4,7 @@
     "description": "Encapsulated the core domain of the calculator",
     "main": "index.js",
     "scripts": {
-        "test": "vitest",
+        "test": "vitest run",
         "coverage": "vitest run --coverage",
         "prepare": "husky install",
         "type-check": "tsc --project tsconfig.json --pretty --noEmit",

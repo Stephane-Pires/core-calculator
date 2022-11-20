@@ -6,4 +6,5 @@ module.exports = {
         'prettier --check',
     ],
     '**/*.{css,md}': ['prettier --check'],
+    '**/*.test.{js,ts}': ['npm run test'],
 }
