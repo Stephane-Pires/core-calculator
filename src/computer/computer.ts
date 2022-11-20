@@ -3,6 +3,7 @@ import {
     isArithmeticalOperation,
     isOperator,
     parseArithmeticalOperation,
+    removeWhitespaces,
 } from '../parser/parser'
 
 function compute(str: string) {
@@ -22,3 +23,15 @@ function compute(str: string) {
 }
 
 export default compute
+
+function validate(str: string) {
+    const removedWhitespaces = removeWhitespaces(str)
+
+    if (isArithmeticalOperation(removedWhitespaces)) {
+        return removedWhitespaces
+    }
+
+    throw new Error('This string is not valid arithmetical operation')
+}
+
+validate('test')
