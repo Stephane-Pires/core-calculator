@@ -1,12 +1,15 @@
+import { ArithmeticalOperation } from 'src/domain/operator'
 import { describe, expect, test } from 'vitest'
 
 import {
-    isNumber,
+    isArithmeticalOperation,
+    isNumeral,
     isOperator,
-    isValid,
+    parseArithmeticalOperation,
     removeWhitespaces,
-    splitString,
 } from './parser'
+
+const mockArithmeticalOperation = '1+2-3/4*5' as ArithmeticalOperation
 
 describe('Validate string', () => {
     test('Should remove all whitespaces', () => {
@@ -14,57 +17,53 @@ describe('Validate string', () => {
     })
 
     test('Should split string into number and operators', () => {
-        expect(splitString('1+2-3/4*5')).toStrictEqual([
-            '1',
-            '+',
-            '2',
-            '-',
-            '3',
-            '/',
-            '4',
-            '*',
-            '5',
-        ])
+        expect(
+            parseArithmeticalOperation(mockArithmeticalOperation)
+        ).toStrictEqual(['1', '+', '2', '-', '3', '/', '4', '*', '5'])
     })
 
     test('Should globally validate string input', () => {
-        expect(isValid('1+2-3/4*5')).toBe(true)
+        expect(isArithmeticalOperation('1+2-3/4*5')).toBe(true)
     })
 
     test('Should globally validate string input', () => {
-        expect(isValid('11231 + 123123    +   3232 - 123')).toBe(true)
+        expect(
+            isArithmeticalOperation('11231 + 123123    +   3232 - 123')
+        ).toBe(true)
     })
 
     test('Should globally validate string input', () => {
-        expect(isValid('1 + 22 - 33 / 4.3232 * 5.98897')).toBe(true)
+        expect(isArithmeticalOperation('1 + 22 - 33 / 4.3232 * 5.98897')).toBe(
+            true
+        )
     })
 })
 
 describe('Number', () => {
     describe('Validation', () => {
         test('Should validate whole number', () => {
-            expect(isNumber('12342')).toBe(true)
+            expect(isNumeral('12342')).toBe(true)
         })
 
         test('Should validate decimal number (with a comma)', () => {
-            expect(isNumber('12342,46')).toBe(true)
+            expect(isNumeral('12342,46')).toBe(true)
         })
 
         test('Should validate decimal number (with a point)', () => {
-            expect(isNumber('12342.46')).toBe(true)
+            expect(isNumeral('12342.46')).toBe(true)
         })
 
         test('Should validate number with trailing zeros', () => {
-            expect(isNumber('000012342')).toBe(true)
+            expect(isNumeral('000012342')).toBe(true)
         })
     })
     describe('Reject', () => {
         test('Should reject unvalide number', () => {
-            expect(isNumber('12342,,46')).toBe(false)
+            expect(isNumeral('12342,,46')).toBe(false)
         })
 
         test('Should reject unvalide number', () => {
-            expect(isNumber('this is not a number')).toBe(false)
+            expect(isNumeral('this is not a number')).toBe(false)
         })
     })
 })

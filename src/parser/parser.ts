@@ -1,4 +1,9 @@
-import { Operator, OPERATOR_SYMBOL } from '../domain/operator'
+import {
+    ArithmeticalOperation,
+    Numeral,
+    Operator,
+    OPERATOR_SYMBOL,
+} from '../domain/operator'
 
 const templateNumber = `(\\d+[.|,]?)?\\d+`
 const templateOperator = `\\s*[${OPERATOR_SYMBOL.join('')}]\\s*`
@@ -7,14 +12,18 @@ export function removeWhitespaces(str: string) {
     return str.replace(/\s+/g, '')
 }
 
-export function splitString(str: string) {
+export function parseArithmeticalOperation(
+    arithmeticalOperation: ArithmeticalOperation
+) {
     const template = `([${OPERATOR_SYMBOL.join('')}])`
     const regexOperator = new RegExp(template)
 
-    return str.split(regexOperator)
+    return arithmeticalOperation.split(regexOperator) as Array<
+        Numeral | Operator
+    >
 }
 
-export function isNumber(str: string) {
+export function isNumeral(str: string): str is Numeral {
     const template = `^${templateNumber}$`
     const regexNumber = new RegExp(template)
 
@@ -28,7 +37,9 @@ export function isOperator(str: string): str is Operator {
     return regexOperator.test(str)
 }
 
-export function isValid(str: string) {
+export function isArithmeticalOperation(
+    str: string
+): str is ArithmeticalOperation {
     const template = `^(${templateNumber}${templateOperator})*${templateNumber}$`
     const regexOperator = new RegExp(template, 'g')
 

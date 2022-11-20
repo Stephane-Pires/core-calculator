@@ -9,6 +9,18 @@ export type Operator = typeof OPERATOR[keyof typeof OPERATOR]
 
 export const OPERATOR_SYMBOL = Object.values(OPERATOR)
 
+const numeral = Symbol('numeral')
+
+export type Numeral = string & {
+    __brand: typeof numeral
+}
+
+const arithmeticalOperaton = Symbol('arithmeticalOperation')
+
+export type ArithmeticalOperation = string & {
+    __brand: typeof arithmeticalOperaton
+}
+
 export function sum(a: number, b: number) {
     return a + b
 }
