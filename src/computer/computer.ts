@@ -1,10 +1,10 @@
-import { ArithmeticalOperation, findOperator } from '../domain/operator'
 import {
+    ArithmeticalOperation,
     isArithmeticalOperation,
-    isOperator,
     parseArithmeticalOperation,
     removeWhitespaces,
-} from '../parser/parser'
+} from 'src/domain/arithmetical-operation/arithmetical-operation'
+import { findOperator, isOperator } from 'src/domain/operator/operator'
 
 export function compute(arithmeticalOperation: ArithmeticalOperation) {
     const operations = parseArithmeticalOperation(arithmeticalOperation)

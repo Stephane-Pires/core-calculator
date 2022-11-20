@@ -9,16 +9,13 @@ export type Operator = typeof OPERATOR[keyof typeof OPERATOR]
 
 export const OPERATOR_SYMBOL = Object.values(OPERATOR)
 
-const numeral = Symbol('numeral')
+export const templateOperator = `\\s*[${OPERATOR_SYMBOL.join('')}]\\s*`
 
-export type Numeral = string & {
-    __brand: typeof numeral
-}
+export function isOperator(str: string): str is Operator {
+    const template = `^${templateOperator}$`
+    const regexOperator = new RegExp(template, 'g')
 
-const arithmeticalOperaton = Symbol('arithmeticalOperation')
-
-export type ArithmeticalOperation = string & {
-    __brand: typeof arithmeticalOperaton
+    return regexOperator.test(str)
 }
 
 export function sum(a: number, b: number) {

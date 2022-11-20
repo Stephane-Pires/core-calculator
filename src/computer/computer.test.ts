@@ -1,4 +1,4 @@
-import { isArithmeticalOperation } from 'src/parser/parser'
+import { isArithmeticalOperation } from 'src/domain/arithmetical-operation/arithmetical-operation'
 import { describe, expect, test } from 'vitest'
 
 import { compute, validate } from './computer'

@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest'
 import {
     divide,
     findOperator,
+    isOperator,
     multiply,
     OPERATOR,
     substraction,
@@ -34,5 +35,34 @@ describe('Calculator is able to make operations', () => {
 describe('Calculator should be able to return the correct operation function', () => {
     test('Should return a valid operation function', () => {
         expect(findOperator(OPERATOR.PLUS)).toEqual(sum)
+    })
+})
+
+describe('Operator', () => {
+    describe('Validation', () => {
+        test('Should validate operator', () => {
+            expect(isOperator('+')).toBe(true)
+        })
+
+        test('Should validate decimal number (with a comma)', () => {
+            expect(isOperator('-')).toBe(true)
+        })
+
+        test('Should validate decimal number (with a point)', () => {
+            expect(isOperator('/')).toBe(true)
+        })
+
+        test('Should validate number with trailing zeros', () => {
+            expect(isOperator('*')).toBe(true)
+        })
+    })
+    describe('Reject', () => {
+        test('Should reject unvalide number', () => {
+            expect(isOperator('++')).toBe(false)
+        })
+
+        test('Should reject unvalide number', () => {
+            expect(isOperator('--')).toBe(false)
+        })
     })
 })
