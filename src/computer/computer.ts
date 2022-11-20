@@ -1,15 +1,13 @@
-import { findOperator } from '../domain/operator'
+import { ArithmeticalOperation, findOperator } from '../domain/operator'
 import {
     isArithmeticalOperation,
     isOperator,
     parseArithmeticalOperation,
+    removeWhitespaces,
 } from '../parser/parser'
 
-function compute(str: string) {
-    if (!isArithmeticalOperation(str))
-        throw new Error('This string is not valid')
-
-    const operations = parseArithmeticalOperation(str)
+export function compute(arithmeticalOperation: ArithmeticalOperation) {
+    const operations = parseArithmeticalOperation(arithmeticalOperation)
 
     const result = operations.reduce((acc, elem, index, array) => {
         if (isOperator(elem)) {
@@ -21,4 +19,14 @@ function compute(str: string) {
     return result
 }
 
-export default compute
+export function validate(str: string) {
+    const strWithRemovedWhitespaces = removeWhitespaces(str)
+
+    if (isArithmeticalOperation(strWithRemovedWhitespaces))
+        return strWithRemovedWhitespaces
+    throw new Error('This string is not valid Arithmetical Operation')
+}
+
+export function run(str: string) {
+    compute(validate(str))
+}

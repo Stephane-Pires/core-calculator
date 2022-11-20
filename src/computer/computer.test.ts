@@ -1,31 +1,45 @@
+import { isArithmeticalOperation } from 'src/parser/parser'
 import { describe, expect, test } from 'vitest'
 
-import compute from './computer'
+import { compute, validate } from './computer'
+
+const arrayOfNumeralOperation = [
+    '1+1',
+    '1-1',
+    '1 * 7',
+    '10 /      2',
+    '10  + 2  - 1   * 3 /    3',
+].map((str) => {
+    if (isArithmeticalOperation(str)) {
+        return str
+    }
+    throw new Error('This string is not an Arithmetical Operation')
+})
 
 describe('Compute operation correctly', () => {
     test('Should addition two number', () => {
-        expect(compute('1+1')).toBe(2)
+        expect(compute(arrayOfNumeralOperation[0])).toBe(2)
     })
 
     test('Should substract two number', () => {
-        expect(compute('1 - 1')).toBe(0)
+        expect(compute(arrayOfNumeralOperation[1])).toBe(0)
     })
 
     test('Should multiply two number', () => {
-        expect(compute('1 * 7')).toBe(7)
+        expect(compute(arrayOfNumeralOperation[2])).toBe(7)
     })
 
     test('Should divide two number', () => {
-        expect(compute('10 /     2')).toBe(5)
+        expect(compute(arrayOfNumeralOperation[3])).toBe(5)
     })
 
     test('Should add/multiply/divide/substract numbers properly', () => {
-        expect(compute('10  + 2   - 1 *   3 /       3')).toBe(11)
+        expect(compute(arrayOfNumeralOperation[4])).toBe(11)
     })
 })
 
 describe('Throw an error if input is incorrect', () => {
     test('Should throw', () => {
-        expect(() => compute('lkdjvdlfjslkj')).toThrowError(/not valid/)
+        expect(() => validate('lkdjvdlfjslkj')).toThrowError(/not valid/)
     })
 })
