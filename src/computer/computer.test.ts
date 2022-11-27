@@ -3,12 +3,12 @@ import { describe, expect, test } from 'vitest'
 
 import { compute, validate } from './computer'
 
-const arrayOfNumeralOperation = [
+const ARRAY_OF_ARITHMETICAL_OPERTATION = [
     '1+1',
-    '1-1',
-    '1 * 7',
-    '10 /      2',
-    '10  + 2  - 1   * 3 /    3',
+    '1-2',
+    '1*7',
+    '10/2',
+    '10+2-1*3/3',
 ].map((str) => {
     if (isArithmeticalOperation(str)) {
         return str
@@ -18,23 +18,23 @@ const arrayOfNumeralOperation = [
 
 describe('Compute operation correctly', () => {
     test('Should addition two number', () => {
-        expect(compute(arrayOfNumeralOperation[0])).toBe(2)
+        expect(compute(ARRAY_OF_ARITHMETICAL_OPERTATION[0])).toBe(2)
     })
 
     test('Should substract two number', () => {
-        expect(compute(arrayOfNumeralOperation[1])).toBe(0)
+        expect(compute(ARRAY_OF_ARITHMETICAL_OPERTATION[1])).toBe(-1)
     })
 
     test('Should multiply two number', () => {
-        expect(compute(arrayOfNumeralOperation[2])).toBe(7)
+        expect(compute(ARRAY_OF_ARITHMETICAL_OPERTATION[2])).toBe(7)
     })
 
     test('Should divide two number', () => {
-        expect(compute(arrayOfNumeralOperation[3])).toBe(5)
+        expect(compute(ARRAY_OF_ARITHMETICAL_OPERTATION[3])).toBe(5)
     })
 
     test('Should add/multiply/divide/substract numbers properly', () => {
-        expect(compute(arrayOfNumeralOperation[4])).toBe(11)
+        expect(compute(ARRAY_OF_ARITHMETICAL_OPERTATION[4])).toBe(11)
     })
 })
 

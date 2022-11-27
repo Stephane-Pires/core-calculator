@@ -1,5 +1,7 @@
 import { describe, expect, test } from 'vitest'
 
+import { createNumeral, isStrNumeral } from '../numeral/numeral'
+import { createOperator } from '../operator/operator'
 import {
     ArithmeticalOperation,
     isArithmeticalOperation,
@@ -7,7 +9,15 @@ import {
     removeWhitespaces,
 } from './arithmetical-operation'
 
-const mockArithmeticalOperation = '1+2-3/4*5' as ArithmeticalOperation
+const mockStrArithmeticalOperation = '1+2-3/4*5' as ArithmeticalOperation
+const mockArithmeticalOperation = mockStrArithmeticalOperation
+    .split('')
+    .map((elem) => {
+        if (isStrNumeral(elem)) {
+            return createNumeral(elem)
+        }
+        return createOperator(elem)
+    })
 
 describe('Validate string', () => {
     test('Should remove all whitespaces', () => {
@@ -16,8 +26,8 @@ describe('Validate string', () => {
 
     test('Should split string into number and operators', () => {
         expect(
-            parseArithmeticalOperation(mockArithmeticalOperation)
-        ).toStrictEqual(['1', '+', '2', '-', '3', '/', '4', '*', '5'])
+            parseArithmeticalOperation(mockStrArithmeticalOperation)
+        ).toStrictEqual(mockArithmeticalOperation)
     })
 
     test('Should globally validate string input', () => {
