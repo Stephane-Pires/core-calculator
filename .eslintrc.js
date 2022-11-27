@@ -18,6 +18,14 @@ const EXTENDS_TYPESCRIPT = [
 const TYPESCRIPT = [
     {
         extends: EXTENDS_TYPESCRIPT,
+        rules: {
+            'no-else-return': [
+                'error',
+                {
+                    allowElseIf: true,
+                },
+            ],
+        },
         files: ['*.ts', '*.tsx'],
         parserOptions: {
             project: ['./tsconfig.json'],
