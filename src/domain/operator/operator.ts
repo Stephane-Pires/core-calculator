@@ -1,28 +1,21 @@
-export const OPERATOR = {
+import isCommutative from 'src/utils/math'
+
+/*
+
+BELOW OPERATORS THAT OPERATES ON STRING
+
+*/
+
+export const STRING_OPERATOR = {
     PLUS: '+',
     MINUS: '-',
     DIVIDE: '/',
     MULTIPLY: '*',
 } as const
 
-export const operator = Symbol('operator')
+export const OPERATOR_SYMBOL = Object.values(STRING_OPERATOR)
 
-export type StrOperator = typeof OPERATOR[keyof typeof OPERATOR]
-
-// TODO : simplify with  ENUM
-export type FunctionOperator =
-    | typeof sum
-    | typeof substraction
-    | typeof multiply
-    | typeof divide
-
-export type Operator = {
-    type: typeof operator
-    value: FunctionOperator
-    isCommutative: boolean
-}
-
-export const OPERATOR_SYMBOL = Object.values(OPERATOR)
+export type StrOperator = typeof STRING_OPERATOR[keyof typeof STRING_OPERATOR]
 
 export const templateOperator = `\\s*[${OPERATOR_SYMBOL.join('')}]\\s*`
 
@@ -32,6 +25,12 @@ export function isStrOperator(str: string): str is StrOperator {
 
     return regexOperator.test(str)
 }
+
+/*
+
+BELOW FUNCTION OPERATORS
+
+*/
 
 export function sum(a: number, b: number) {
     return a + b
@@ -49,28 +48,47 @@ export function divide(numerator: number, denominator: number) {
     return Math.round(numerator / denominator)
 }
 
-// TODO to move in MATH module
-export function isCommutative(f: (a: number, b: number) => number) {
-    const a = 5
-    const b = 12
-    return f(a, b) === f(b, a)
-}
+export const FUNCTION_OPERATOR = {
+    PLUS: sum,
+    MINUS: substraction,
+    DIVIDE: divide,
+    MULTIPLY: multiply,
+} as const
+
+export type FunctionOperator =
+    typeof FUNCTION_OPERATOR[keyof typeof FUNCTION_OPERATOR]
 
 export function findOperator(strOperator: StrOperator) {
     switch (strOperator) {
-        case OPERATOR.PLUS:
+        case STRING_OPERATOR.PLUS:
             return sum
-        case OPERATOR.DIVIDE:
+        case STRING_OPERATOR.DIVIDE:
             return divide
-        case OPERATOR.MINUS:
+        case STRING_OPERATOR.MINUS:
             return substraction
-        case OPERATOR.MULTIPLY:
+        case STRING_OPERATOR.MULTIPLY:
             return multiply
         default:
             throw new Error(
-                `This operator : ${strOperator} does not belong to the ${OPERATOR} handled by the domain`
+                `This operator is not valid: ${strOperator} does not belong to the OPERATOR_SYMBOL : (${OPERATOR_SYMBOL.join(
+                    ','
+                )}) handled by the domain`
             )
     }
+}
+
+/*
+
+BELOW OPERATORS
+
+*/
+
+export const operator = Symbol('operator')
+
+export type Operator = {
+    type: typeof operator
+    value: FunctionOperator
+    isCommutative: boolean
 }
 
 export function createOperator(str: string): Operator {
@@ -81,7 +99,7 @@ export function createOperator(str: string): Operator {
 
     return {
         type: operator,
-        value: funcOperator,
+        value: findOperator(str),
         isCommutative: isCommutative(funcOperator),
     }
 }

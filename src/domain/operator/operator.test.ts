@@ -1,11 +1,15 @@
 import { describe, expect, test } from 'vitest'
 
 import {
+    createOperator,
     divide,
     findOperator,
     isStrOperator,
     multiply,
-    OPERATOR,
+    operator,
+    Operator,
+    STRING_OPERATOR,
+    StrOperator,
     substraction,
     sum,
 } from './operator'
@@ -63,7 +67,7 @@ describe('Calculator is able to make operations', () => {
 
 describe('Calculator should be able to return the correct operation function', () => {
     test('Should return a valid operation function', () => {
-        expect(findOperator(OPERATOR.PLUS)).toEqual(sum)
+        expect(findOperator(STRING_OPERATOR.PLUS)).toEqual(sum)
     })
 })
 describe('Calculator is able to make operations', () => {
@@ -88,8 +92,28 @@ describe('Calculator is able to make operations', () => {
     })
 })
 
-describe('Calculator should be able to return the correct operation function', () => {
+describe('findOperator', () => {
     test('Should return a valid operation function', () => {
-        expect(findOperator(OPERATOR.PLUS)).toEqual(sum)
+        expect(findOperator(STRING_OPERATOR.PLUS)).toEqual(sum)
+    })
+
+    test('Should throw when an uncorrect argument is passed', () => {
+        expect(() => findOperator('%' as StrOperator)).toThrowError(/not valid/)
+    })
+})
+
+describe('createOperator', () => {
+    const MOCK_OPERATOR: Operator = {
+        isCommutative: true,
+        value: sum,
+        type: operator,
+    }
+
+    test('Should return a valid Operator', () => {
+        expect(createOperator(STRING_OPERATOR.PLUS)).toEqual(MOCK_OPERATOR)
+    })
+
+    test('Should throw when an uncorrect argument is passed', () => {
+        expect(() => createOperator('%')).toThrowError(/not valid/)
     })
 })
