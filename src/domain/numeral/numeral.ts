@@ -1,7 +1,7 @@
 export const numeral = Symbol('numeral')
 export const templateNumeral = `(\\d+[.|,]?)?\\d+`
 
-export type StrNumeral = string & {
+type StrNumeral = string & {
     __brand: typeof numeral
 }
 

@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
 
-import { isStrNumeral } from './numeral'
+import { createNumeral, isStrNumeral, numeral, Numeral } from './numeral'
 
-describe('Number', () => {
+describe('isStrNumeral', () => {
     describe('Validation', () => {
         test('Should validate whole number', () => {
             expect(isStrNumeral('12342')).toBe(true)
@@ -28,5 +28,20 @@ describe('Number', () => {
         test('Should reject unvalide number', () => {
             expect(isStrNumeral('this is not a number')).toBe(false)
         })
+    })
+})
+
+describe('createNumeral', () => {
+    const MOCK_NUMERAL: Numeral = {
+        value: 123,
+        type: numeral,
+    }
+
+    test('Should return a valid Operator', () => {
+        expect(createNumeral('123')).toEqual(MOCK_NUMERAL)
+    })
+
+    test('Should throw when an uncorrect argument is passed', () => {
+        expect(() => createNumeral('123/2313')).toThrowError(/not valid/)
     })
 })
