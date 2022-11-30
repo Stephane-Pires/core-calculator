@@ -10,7 +10,7 @@ import {
     isStrOperator,
     operator,
     Operator,
-    OPERATOR_SYMBOL,
+    STRING_OPERATOR,
     templateOperator,
 } from '../operator/operator'
 
@@ -30,7 +30,7 @@ export type ArithmeticalOperation = string & {
 export function parseArithmeticalOperation(
     arithmeticalOperation: ArithmeticalOperation
 ) {
-    const template = `([${OPERATOR_SYMBOL.join('')}])`
+    const template = `([${Object.values(STRING_OPERATOR).join('')}])`
     const regexOperator = new RegExp(template)
 
     return arithmeticalOperation.split(regexOperator).map((str) => {

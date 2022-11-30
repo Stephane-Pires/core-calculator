@@ -13,11 +13,11 @@ export const STRING_OPERATOR = {
     MULTIPLY: '*',
 } as const
 
-export const OPERATOR_SYMBOL = Object.values(STRING_OPERATOR)
-
 export type StrOperator = typeof STRING_OPERATOR[keyof typeof STRING_OPERATOR]
 
-export const templateOperator = `\\s*[${OPERATOR_SYMBOL.join('')}]\\s*`
+export const templateOperator = `\\s*[${Object.values(STRING_OPERATOR).join(
+    ''
+)}]\\s*`
 
 export function isStrOperator(str: string): str is StrOperator {
     const template = `^${templateOperator}$`
@@ -32,20 +32,47 @@ BELOW FUNCTION OPERATORS
 
 */
 
+// private, exported only to be used in operator.test.ts
 export function sum(a: number, b: number) {
     return a + b
 }
 
-export function substraction(a: number, b: number) {
+function substraction(a: number, b: number) {
     return a - b
 }
 
-export function multiply(a: number, b: number) {
+function multiply(a: number, b: number) {
     return a * b
 }
 
-export function divide(numerator: number, denominator: number) {
+function divide(numerator: number, denominator: number) {
     return Math.round(numerator / denominator)
+}
+
+// in-source test suites
+if (import.meta.vitest) {
+    const { describe, test, expect } = import.meta.vitest
+    describe('Calculator is able to make operations', () => {
+        test('Should addition two number', () => {
+            expect(sum(1, 1)).toBe(2)
+        })
+
+        test('Should substract two number', () => {
+            expect(substraction(2, 1)).toBe(1)
+        })
+
+        test('Should multiply two number', () => {
+            expect(multiply(10, 2)).toBe(20)
+        })
+
+        test('Should divide two number', () => {
+            expect(divide(10, 2)).toBe(5)
+        })
+
+        test('Should round result', () => {
+            expect(divide(100, 3)).toBe(33)
+        })
+    })
 }
 
 export const FUNCTION_OPERATOR = {
@@ -58,7 +85,7 @@ export const FUNCTION_OPERATOR = {
 export type FunctionOperator =
     typeof FUNCTION_OPERATOR[keyof typeof FUNCTION_OPERATOR]
 
-export function findOperator(strOperator: StrOperator) {
+function findFunctionOperator(strOperator: StrOperator) {
     switch (strOperator) {
         case STRING_OPERATOR.PLUS:
             return sum
@@ -70,11 +97,32 @@ export function findOperator(strOperator: StrOperator) {
             return multiply
         default:
             throw new Error(
-                `This operator is not valid: ${strOperator} does not belong to the OPERATOR_SYMBOL : (${OPERATOR_SYMBOL.join(
-                    ','
-                )}) handled by the domain`
+                `This operator is not valid: ${strOperator} does not belong to : (${Object.values(
+                    STRING_OPERATOR
+                ).join(',')}) handled by the domain`
             )
     }
+}
+
+if (import.meta.vitest) {
+    const { describe, test, expect } = import.meta.vitest
+    describe('Calculator should be able to return the correct operation function', () => {
+        test('Should return a valid operation function', () => {
+            expect(findFunctionOperator(STRING_OPERATOR.PLUS)).toEqual(sum)
+        })
+    })
+
+    describe('findOperator', () => {
+        test('Should return a valid operation function', () => {
+            expect(findFunctionOperator(STRING_OPERATOR.PLUS)).toEqual(sum)
+        })
+
+        test('Should throw when an uncorrect argument is passed', () => {
+            expect(() => findFunctionOperator('%' as StrOperator)).toThrowError(
+                /not valid/
+            )
+        })
+    })
 }
 
 /*
@@ -95,11 +143,11 @@ export function createOperator(str: string): Operator {
     if (!isStrOperator(str))
         throw new Error('not valid - This string is not an StrOperator')
 
-    const funcOperator = findOperator(str)
+    const funcOperator = findFunctionOperator(str)
 
     return {
         type: operator,
-        value: findOperator(str),
+        value: findFunctionOperator(str),
         isCommutative: isCommutative(funcOperator),
     }
 }
