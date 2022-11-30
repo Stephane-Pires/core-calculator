@@ -24,7 +24,9 @@
             "@lib/*": ["lib/*"],
             "@utils/*": ["utils/*"],
             "@styles/*": ["styles/*"]
-        }
+        },
+
+        "types": ["vitest/importMeta"]
     },
     "exclude": ["node_modules"],
     "include": ["src"]
