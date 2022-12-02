@@ -3,10 +3,10 @@ import {
     createArithmeticalFormula,
     isNumeral,
     isOperator,
-    removeWhitespaces,
 } from 'src/domain/arithmetical-operation/arithmetical-operation'
 import curry from 'src/utils/curry'
 import { flip, mapFunction, pipe } from 'src/utils/functional'
+import removeWhitespaces from 'src/utils/string'
 
 function calculate(formula: ArithmeticalFormula) {
     // const result = operations.reduce((acc, elem, index, array) => {

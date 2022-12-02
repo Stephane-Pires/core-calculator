@@ -19,11 +19,6 @@ const arithmeticalFormula = Symbol('arithmeticalFormula')
 export type ArithmeticalElement = Numeral | Operator
 export type ArithmeticalFormula = Array<Numeral | Operator>
 
-// move in utils, or somewhere else
-export function removeWhitespaces(str: string) {
-    return str.replace(/\s+/g, '')
-}
-
 export type StrArithmeticalFormula = string & {
     __brand: typeof arithmeticalFormula
 }

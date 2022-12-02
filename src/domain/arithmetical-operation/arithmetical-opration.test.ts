@@ -5,7 +5,6 @@ import {
     isNumeral,
     isOperator,
     isStrArithmeticalFormula,
-    removeWhitespaces,
 } from './arithmetical-operation'
 import { createNumeral, isStrNumeral, Numeral } from './numeral/numeral'
 import { createOperator, Operator } from './operator/operator'
@@ -22,12 +21,6 @@ const mockArithmeticalFormula = mockStrArithmeticalFormula
 
 describe('createArithmeticalFormula', () => {
     describe('Should return an Arithmetical Formula', () => {
-        test('Should remove all whitespaces', () => {
-            expect(removeWhitespaces('   1 + 2 - 3 / 4 *   5')).toBe(
-                '1+2-3/4*5'
-            )
-        })
-
         test('When argument is a valid StrArithmeticalFormula ', () => {
             expect(
                 createArithmeticalFormula(mockStrArithmeticalFormula)
