@@ -1,0 +1,3 @@
+-   Calculator-core can expose DOMAIN types : ArithmeticalFormula, Numeral, Operaor
+-   Calculator-core should not expose PRIVATE DOMAIN types(StrNumeral, StrOperator, StrArithmeticalFormula)
+-   Double check the "interface" of the library, double check what's "PRIVATE" VS "PUBLIC"
