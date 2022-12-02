@@ -1,17 +1,14 @@
 import {
-    ArithmeticalOperation,
-    createArithmeticalOperation,
+    ArithmeticalFormula,
+    createArithmeticalFormula,
     isNumeral,
     isOperator,
-    parseArithmeticalOperation,
     removeWhitespaces,
 } from 'src/domain/arithmetical-operation/arithmetical-operation'
 import curry from 'src/utils/curry'
 import { flip, mapFunction, pipe } from 'src/utils/functional'
 
-export function compute(arithmeticalOperation: ArithmeticalOperation) {
-    const operations = parseArithmeticalOperation(arithmeticalOperation)
-
+function calculate(formula: ArithmeticalFormula) {
     // const result = operations.reduce((acc, elem, index, array) => {
     //     if (isStrOperator(elem)) {
     //         return findOperator(elem)(acc, Number(array[index + 1]))
@@ -19,15 +16,13 @@ export function compute(arithmeticalOperation: ArithmeticalOperation) {
     //     return acc
     // }, Number(operations[0]))
 
-    const operators = operations.filter(isOperator).map((operator) => {
+    const operators = formula.filter(isOperator).map((operator) => {
         if (!operator.isCommutative) {
             return flip(operator.value)
         }
         return operator.value
     }) // n - 2
-    const numerals = operations
-        .filter(isNumeral)
-        .map((numeral) => numeral.value) // n
+    const numerals = formula.filter(isNumeral).map((numeral) => numeral.value) // n
 
     const firstNumeral = numerals.shift()
 
@@ -47,11 +42,31 @@ export function compute(arithmeticalOperation: ArithmeticalOperation) {
     return result
 }
 
-export function validate(str: string) {
-    const strWithRemovedWhitespaces = removeWhitespaces(str)
-    return createArithmeticalOperation(strWithRemovedWhitespaces)
+if (import.meta.vitest) {
+    const { describe, test, expect } = import.meta.vitest
+
+    describe('calculate', () => {
+        test('Should calculate correctly ArithmeticalFormula', () => {
+            expect(calculate(createArithmeticalFormula('1+2+3+4-5'))).toBe(5)
+        })
+    })
 }
 
-export function run(str: string) {
-    compute(validate(str))
+function validate(str: string) {
+    const strWithRemovedWhitespaces = removeWhitespaces(str)
+
+    return createArithmeticalFormula(strWithRemovedWhitespaces)
+}
+
+if (import.meta.vitest) {
+    const { describe, test, expect } = import.meta.vitest
+    describe('Throw an error if input is incorrect', () => {
+        test('Should throw', () => {
+            expect(() => validate('lkdjvdlfjslkj')).toThrowError(/not valid/)
+        })
+    })
+}
+
+export default function compute(str: string) {
+    return calculate(validate(str))
 }
