@@ -9,35 +9,22 @@ import { flip, mapFunction, pipe } from 'src/utils/functional'
 import removeWhitespaces from 'src/utils/string'
 
 function calculate(formula: ArithmeticalFormula) {
-    // const result = operations.reduce((acc, elem, index, array) => {
-    //     if (isStrOperator(elem)) {
-    //         return findOperator(elem)(acc, Number(array[index + 1]))
-    //     }
-    //     return acc
-    // }, Number(operations[0]))
-
     const operators = formula.filter(isOperator).map((operator) => {
         if (!operator.isCommutative) {
             return flip(operator.value)
         }
         return operator.value
-    }) // n - 2
-    const numerals = formula.filter(isNumeral).map((numeral) => numeral.value) // n
+    })
+    const numerals = formula.filter(isNumeral).map((numeral) => numeral.value)
 
     const firstNumeral = numerals.shift()
 
-    const curriedOperators = operators.map((operator) => curry(operator))
-    const partialApplication = mapFunction(numerals, curriedOperators)
+    const partialApplication = mapFunction(
+        numerals,
+        operators.map((operator) => curry(operator))
+    )
 
     const result = pipe(firstNumeral, partialApplication)
-
-    // 1 + 2 + 3 + 4
-    // 2 3 4
-    // + + +
-
-    // add(2), add(3), add(4)
-
-    // add(2)(1), add(3)(3), add(4)(6) = 10
 
     return result
 }

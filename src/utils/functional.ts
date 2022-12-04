@@ -15,8 +15,10 @@ export function mapFunction<T>(array: Array<T>, arrayFunc: Array<Function>) {
     return arrayFunc.map((f, i) => f(array[i]))
 }
 
-export function flip(f: Function) {
-    return (a: unknown, b: unknown) => f(b, a)
+export function flip<T extends (...args: any) => any>(f: T) {
+    type TParam = Parameters<T>
+    type TReturn = ReturnType<T>
+    return (a: TParam[0], b: TParam[1]) => f(b, a) as TReturn
 }
 
 // export function pipe<A>(a: A): A
