@@ -42,7 +42,7 @@ describe('createOperator', () => {
     const MOCK_OPERATOR: Operator = {
         isCommutative: true,
         value: sum,
-        type: operator,
+        tag: operator,
     }
 
     test('Should return a valid Operator', () => {

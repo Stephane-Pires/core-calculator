@@ -89,9 +89,9 @@ export function createArithmeticalFormula(str: string) {
 }
 
 export function isNumeral(element: ArithmeticalElement): element is Numeral {
-    return element.type === numeral
+    return element.tag === numeral
 }
 
 export function isOperator(element: ArithmeticalElement): element is Operator {
-    return element.type === operator
+    return element.tag === operator
 }

@@ -6,7 +6,7 @@ type StrNumeral = string & {
 }
 
 export interface Numeral {
-    type: typeof numeral
+    tag: typeof numeral
     value: number
 }
 
@@ -22,7 +22,7 @@ export function createNumeral(str: string): Numeral {
         throw new Error('not valid - This string is not a StrNumeral')
 
     return {
-        type: numeral,
+        tag: numeral,
         value: Number(str),
     }
 }

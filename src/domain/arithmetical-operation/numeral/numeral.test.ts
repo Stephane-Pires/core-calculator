@@ -34,7 +34,7 @@ describe('isStrNumeral', () => {
 describe('createNumeral', () => {
     const MOCK_NUMERAL: Numeral = {
         value: 123,
-        type: numeral,
+        tag: numeral,
     }
 
     test('Should return a valid Operator', () => {

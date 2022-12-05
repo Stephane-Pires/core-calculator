@@ -134,7 +134,7 @@ BELOW OPERATORS
 export const operator = Symbol('operator')
 
 export type Operator = {
-    type: typeof operator
+    tag: typeof operator
     value: FunctionOperator
     isCommutative: boolean
 }
@@ -146,7 +146,7 @@ export function createOperator(str: string): Operator {
     const funcOperator = findFunctionOperator(str)
 
     return {
-        type: operator,
+        tag: operator,
         value: findFunctionOperator(str),
         isCommutative: isCommutative(funcOperator),
     }
